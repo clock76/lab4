@@ -1,0 +1,1742 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="description" content="W Hookah Zavozik — пространство для отдыха, общения и атмосферы. Твой режим. Твоё пространство." />
+<title>W Hookah Zavozik — Твой режим. Твоё пространство.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     CSS VARIABLES
+     ============================================ */
+  :root {
+    --bg-primary: #0B0B0F;
+    --bg-secondary: #15151D;
+    --bg-tertiary: #1C1C26;
+    --text-primary: #F5F5F7;
+    --text-secondary: #A6A6B3;
+    --text-muted: #6B6B78;
+    --accent-purple: #8B5CF6;
+    --accent-purple-soft: rgba(139, 92, 246, 0.15);
+    --accent-lime: #C7FF4F;
+    --accent-lime-soft: rgba(199, 255, 79, 0.12);
+    --border-subtle: rgba(245, 245, 247, 0.08);
+    --border-strong: rgba(245, 245, 247, 0.16);
+
+    --font-display: 'Space Grotesk', 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+
+    --container: 1280px;
+    --gutter: clamp(16px, 4vw, 32px);
+    --header-h: 72px;
+
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --shadow-glow: 0 0 40px rgba(139, 92, 246, 0.25);
+    --shadow-lime: 0 0 30px rgba(199, 255, 79, 0.25);
+  }
+
+  /* ============================================
+     RESET & BASE
+     ============================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    min-height: 100svh;
+  }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; margin: 0; letter-spacing: -0.02em; line-height: 1.05; }
+  p { margin: 0; }
+
+  /* Focus */
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 2px solid var(--accent-lime);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Selection */
+  ::selection { background: var(--accent-purple); color: var(--text-primary); }
+
+  /* ============================================
+     LAYOUT
+     ============================================ */
+  .container {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  section { position: relative; padding: clamp(64px, 10vw, 120px) 0; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .section-label::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--accent-purple);
+  }
+  .section-title {
+    font-size: clamp(32px, 5.5vw, 64px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: clamp(32px, 5vw, 56px);
+    max-width: 14ch;
+  }
+  .section-title .accent { color: var(--accent-lime); font-style: italic; font-weight: 500; }
+  .section-title .purple { color: var(--accent-purple); }
+
+  /* ============================================
+     BACKGROUND DECORATION
+     ============================================ */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(245, 245, 247, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 245, 247, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+  }
+  .blob-purple { background: var(--accent-purple); }
+  .blob-lime { background: var(--accent-lime); opacity: 0.25; }
+
+  @keyframes float-blob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -40px) scale(1.08); }
+  }
+
+  /* ============================================
+     HEADER
+     ============================================ */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-h);
+    z-index: 100;
+    background: rgba(11, 11, 15, 0.72);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .site-header.scrolled {
+    background: rgba(11, 11, 15, 0.88);
+    border-bottom-color: var(--border-strong);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 24px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent-purple), #6D28D9);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: white;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  }
+  .nav-desktop { display: none; }
+  @media (min-width: 900px) {
+    .nav-desktop {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+  .nav-desktop a {
+    position: relative;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border-radius: 8px;
+    transition: color 0.25s var(--ease), background 0.25s var(--ease);
+  }
+  .nav-desktop a::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 4px;
+    height: 1px;
+    background: var(--accent-lime);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease);
+  }
+  .nav-desktop a:hover, .nav-desktop a:focus-visible {
+    color: var(--text-primary);
+  }
+  .nav-desktop a:hover::after { transform: scaleX(1); }
+
+  .header-cta {
+    display: none;
+    padding: 10px 18px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--accent-lime);
+    color: #0B0B0F;
+    border-radius: 999px;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  @media (min-width: 900px) {
+    .header-cta { display: inline-flex; align-items: center; }
+  }
+  .header-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lime);
+  }
+
+  /* Burger */
+  .burger {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    position: relative;
+  }
+  .burger:hover { background: var(--bg-secondary); }
+  .burger-lines {
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+  .burger-lines span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: transform 0.3s var(--ease), top 0.3s var(--ease), opacity 0.2s;
+  }
+  .burger-lines span:nth-child(1) { top: 0; }
+  .burger-lines span:nth-child(2) { top: 6px; }
+  .burger-lines span:nth-child(3) { top: 12px; }
+  .burger[aria-expanded="true"] .burger-lines span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+  .burger[aria-expanded="true"] .burger-lines span:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded="true"] .burger-lines span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+  @media (min-width: 900px) { .burger { display: none; } }
+
+  /* Mobile menu */
+  .nav-mobile {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(11, 11, 15, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 32px var(--gutter) calc(32px + env(safe-area-inset-bottom));
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+  }
+  .nav-mobile.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-mobile a {
+    display: block;
+    padding: 18px 4px;
+    font-family: var(--font-display);
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: color 0.2s var(--ease), padding 0.2s var(--ease);
+  }
+  .nav-mobile a:hover { color: var(--accent-lime); padding-left: 12px; }
+  .nav-mobile .mobile-cta {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 24px;
+    background: var(--accent-lime);
+    color: #0B0B0F;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  @media (min-width: 900px) { .nav-mobile { display: none; } }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    min-height: 100svh;
+    padding-top: calc(var(--header-h) + 40px);
+    padding-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 30%, rgba(139, 92, 246, 0.25), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(199, 255, 79, 0.08), transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero .blob.blob-hero-1 {
+    width: 520px;
+    height: 520px;
+    top: -100px;
+    right: -120px;
+    animation: float-blob 18s ease-in-out infinite;
+  }
+  .hero .blob.blob-hero-2 {
+    width: 380px;
+    height: 380px;
+    bottom: -80px;
+    left: -80px;
+    animation: float-blob 22s ease-in-out infinite reverse;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 40px;
+    padding-bottom: 20px;
+  }
+  @media (min-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+  }
+  .hero-tag .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-lime);
+    box-shadow: 0 0 10px var(--accent-lime);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+  .hero h1 {
+    font-size: clamp(44px, 8.5vw, 104px);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 28px;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .italic {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-lime);
+  }
+  .hero h1 .purple {
+    color: var(--accent-purple);
+    text-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+  }
+  .hero-sub {
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: var(--text-secondary);
+    max-width: 48ch;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 26px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
+    white-space: nowrap;
+    min-height: 52px;
+  }
+  .btn-primary {
+    background: var(--accent-lime);
+    color: #0B0B0F;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lime);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+  }
+  .btn-secondary:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-purple);
+    transform: translateY(-2px);
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    .hero-visual { margin: 0; }
+  }
+  .hero-visual-card {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.4), transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(199, 255, 79, 0.15), transparent 50%),
+      linear-gradient(135deg, #1C1C26, #0B0B0F);
+    border: 1px solid var(--border-strong);
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  .hero-visual-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245, 245, 247, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 245, 247, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at center, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 75%);
+  }
+  .hero-visual-glow {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    top: 15%;
+    left: 15%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.5), transparent 60%);
+    filter: blur(40px);
+    animation: float-blob 12s ease-in-out infinite;
+  }
+  .hero-visual-hookah {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+  .hero-visual-hookah svg {
+    width: 60%;
+    height: 60%;
+    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6));
+  }
+  .hero-visual-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(11, 11, 15, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .hero-visual-badge .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-lime);
+  }
+  .hero-visual-badge .status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-lime);
+    box-shadow: 0 0 8px var(--accent-lime);
+  }
+
+  /* Hero ticker */
+  .hero-ticker {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 18px 0;
+    border-top: 1px solid var(--border-subtle);
+    overflow: hidden;
+    z-index: 2;
+    background: linear-gradient(to top, rgba(11, 11, 15, 0.8), transparent);
+  }
+  .ticker-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    width: max-content;
+  }
+  .ticker-track span { display: inline-flex; align-items: center; gap: 48px; }
+  .ticker-track .sep {
+    color: var(--accent-purple);
+    font-size: 10px;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ============================================
+     ATMOSPHERE
+     ============================================ */
+  .atmosphere { position: relative; }
+  .atm-intro {
+    display: grid;
+    gap: 24px;
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+  @media (min-width: 900px) {
+    .atm-intro {
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      gap: 60px;
+    }
+  }
+  .atm-intro p {
+    font-size: clamp(16px, 1.6vw, 19px);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+  .atm-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) { .atm-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .atm-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .atm-card {
+    position: relative;
+    padding: 32px 28px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
+    overflow: hidden;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .atm-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(139, 92, 246, 0.12), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+    pointer-events: none;
+  }
+  .atm-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(139, 92, 246, 0.4);
+    background: var(--bg-tertiary);
+  }
+  .atm-card:hover::before { opacity: 1; }
+  .atm-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--accent-purple-soft);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    display: grid;
+    place-items: center;
+    color: var(--accent-purple);
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  }
+  .atm-card:hover .atm-card-icon {
+    background: var(--accent-purple);
+    color: white;
+  }
+  .atm-card-icon svg { width: 26px; height: 26px; }
+  .atm-card-num {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .atm-card h3 {
+    font-size: clamp(20px, 2.2vw, 24px);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .atm-card p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* ============================================
+     SERVICES
+     ============================================ */
+  .services {
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+    position: relative;
+  }
+  .services-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+  .services-head p {
+    color: var(--text-secondary);
+    max-width: 42ch;
+    font-size: clamp(15px, 1.5vw, 17px);
+  }
+  .srv-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) { .srv-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .srv-card {
+    position: relative;
+    padding: 32px 28px 28px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .srv-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s var(--ease);
+  }
+  .srv-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+  .srv-card:hover::after { transform: scaleX(1); }
+  .srv-card:nth-child(2):hover { border-color: rgba(199, 255, 79, 0.3); }
+  .srv-card:nth-child(2)::after {
+    background: linear-gradient(90deg, transparent, var(--accent-lime), transparent);
+  }
+  .srv-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+  .srv-card-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+  }
+  .srv-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent-purple-soft), transparent);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    display: grid;
+    place-items: center;
+    color: var(--accent-purple);
+    transition: transform 0.4s var(--ease);
+  }
+  .srv-card:hover .srv-card-icon { transform: rotate(-6deg) scale(1.05); }
+  .srv-card:nth-child(2) .srv-card-icon {
+    background: linear-gradient(135deg, var(--accent-lime-soft), transparent);
+    border-color: rgba(199, 255, 79, 0.2);
+    color: var(--accent-lime);
+  }
+  .srv-card-icon svg { width: 30px; height: 30px; }
+  .srv-card h3 {
+    font-size: clamp(26px, 3vw, 34px);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .srv-card p {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .srv-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+  }
+  .srv-card-tags span {
+    padding: 6px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============================================
+     VIBE BLOCK (атмосферный)
+     ============================================ */
+  .vibe {
+    padding: clamp(80px, 12vw, 160px) 0;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .vibe-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(139, 92, 246, 0.3), transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(199, 255, 79, 0.15), transparent 60%),
+      linear-gradient(180deg, var(--bg-primary), #08080C, var(--bg-primary));
+  }
+  .vibe-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245, 245, 247, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 245, 247, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+  }
+  .vibe-inner {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+  .vibe-title {
+    font-size: clamp(48px, 11vw, 160px);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    background: linear-gradient(180deg, var(--text-primary) 0%, rgba(245, 245, 247, 0.4) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 80px rgba(139, 92, 246, 0.3);
+    max-width: 16ch;
+  }
+  .vibe-title .italic {
+    font-style: italic;
+    font-weight: 500;
+    background: linear-gradient(180deg, var(--accent-lime), #8FCC2E);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 30px rgba(199, 255, 79, 0.3));
+  }
+  .vibe-sub {
+    color: var(--text-secondary);
+    font-size: clamp(15px, 1.5vw, 18px);
+    max-width: 50ch;
+    line-height: 1.6;
+  }
+  .vibe-cta {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: rgba(245, 245, 247, 0.05);
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+  .vibe-cta:hover {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: var(--accent-purple);
+  }
+  .vibe-cta svg { width: 14px; height: 14px; }
+
+  /* ============================================
+     CONTACTS
+     ============================================ */
+  .contacts-grid {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) {
+    .contacts-grid {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 32px;
+    }
+  }
+  .contacts-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-item {
+    padding: 24px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .contact-item:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .contact-item-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .contact-item-label svg { width: 14px; height: 14px; color: var(--accent-purple); }
+  .contact-item-value {
+    font-family: var(--font-display);
+    font-size: clamp(17px, 1.8vw, 20px);
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+  .contact-item-value.placeholder {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0;
+  }
+  .contacts-cta {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .map-placeholder {
+    position: relative;
+    min-height: 380px;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(139, 92, 246, 0.2), transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(199, 255, 79, 0.1), transparent 50%),
+      var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 32px;
+  }
+  .map-placeholder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245, 245, 247, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 245, 247, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+  }
+  .map-placeholder-inner {
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 2;
+  }
+  .map-pin {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent-purple);
+    display: grid;
+    place-items: center;
+    color: white;
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  .map-pin svg { width: 28px; height: 28px; }
+  .map-placeholder-text {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .map-placeholder-title {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 2.5vw, 26px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  .site-footer {
+    padding: 64px 0 32px;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-primary);
+    position: relative;
+  }
+  .footer-top {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr;
+    margin-bottom: 48px;
+  }
+  @media (min-width: 800px) {
+    .footer-top {
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 60px;
+    }
+  }
+  .footer-brand .logo { margin-bottom: 16px; }
+  .footer-brand p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 36ch;
+  }
+  .footer-col h4 {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a {
+    font-size: 15px;
+    color: var(--text-secondary);
+    transition: color 0.2s var(--ease);
+  }
+  .footer-col a:hover { color: var(--accent-lime); }
+  .footer-social {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .footer-social a {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    display: grid;
+    place-items: center;
+    color: var(--text-secondary);
+    transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .footer-social a:hover {
+    background: var(--accent-purple-soft);
+    color: var(--accent-purple);
+    border-color: rgba(139, 92, 246, 0.3);
+    transform: translateY(-2px);
+  }
+  .footer-social svg { width: 18px; height: 18px; }
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .footer-age {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--accent-purple);
+  }
+
+  /* ============================================
+     REVEAL ANIMATION
+     ============================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  .reveal-stagger.in > * { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
+  .reveal-stagger.in > *:nth-child(2) { transition-delay: 0.15s; }
+  .reveal-stagger.in > *:nth-child(3) { transition-delay: 0.25s; }
+  .reveal-stagger.in > *:nth-child(4) { transition-delay: 0.35s; }
+
+  /* ============================================
+     UTILITIES
+     ============================================ */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="site-header" id="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="logo" aria-label="W Hookah Zavozik — на главную">
+      <span class="logo-mark" aria-hidden="true">W</span>
+      <span>Hookah Zavozik</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Основная навигация">
+      <a href="#atmosphere">Атмосфера</a>
+      <a href="#services">Услуги</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+
+    <a href="#contacts" class="header-cta">Найти нас</a>
+
+    <button class="burger" id="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="burger-lines" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+  </div>
+</header>
+
+<nav class="nav-mobile" id="mobile-menu" aria-label="Мобильная навигация">
+  <a href="#atmosphere">Атмосфера</a>
+  <a href="#services">Услуги</a>
+  <a href="#contacts">Контакты</a>
+  <a href="#contacts" class="mobile-cta">Найти нас</a>
+</nav>
+
+<main id="top">
+
+  <!-- ============================================
+       HERO
+       ============================================ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="blob blob-purple blob-hero-1" aria-hidden="true"></div>
+    <div class="blob blob-lime blob-hero-2" aria-hidden="true"></div>
+
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-tag reveal">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Lounge · Vibe · 18+</span>
+        </div>
+        <h1 id="hero-title" class="reveal">
+          <span class="line">Твой <span class="italic">режим.</span></span>
+          <span class="line">Твоё <span class="purple">пространство.</span></span>
+        </h1>
+        <p class="hero-sub reveal">
+          W Hookah Zavozik — это место, где можно выдохнуть, собраться с друзьями и просто быть в моменте. Тёмный лайт, правильный звук и атмосфера, в которой хочется остаться подольше.
+        </p>
+        <div class="hero-actions reveal">
+          <a href="#services" class="btn btn-primary">
+            Смотреть услуги
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#contacts" class="btn btn-secondary">Как нас найти</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="hero-visual-card">
+          <div class="hero-visual-glow"></div>
+          <div class="hero-visual-hookah">
+            <!-- Декоративная SVG-иллюстрация кальяна -->
+            <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.1"/>
+                </linearGradient>
+                <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#F5F5F7" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#A6A6B3" stop-opacity="0.6"/>
+                </linearGradient>
+                <radialGradient id="smoke" cx="0.5" cy="0.5" r="0.5">
+                  <stop offset="0%" stop-color="#C7FF4F" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="#C7FF4F" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+              <!-- Дым -->
+              <circle cx="100" cy="40" r="40" fill="url(#smoke)"/>
+              <circle cx="80" cy="30" r="25" fill="url(#smoke)" opacity="0.6"/>
+              <circle cx="125" cy="35" r="20" fill="url(#smoke)" opacity="0.5"/>
+              <!-- Чаша -->
+              <path d="M 80 60 L 120 60 L 115 80 L 85 80 Z" fill="url(#metal)"/>
+              <!-- Шахта -->
+              <rect x="95" y="80" width="10" height="70" fill="url(#metal)"/>
+              <rect x="92" y="145" width="16" height="6" fill="url(#metal)"/>
+              <!-- Колба -->
+              <path d="M 70 155 Q 60 180 65 210 Q 70 240 100 240 Q 130 240 135 210 Q 140 180 130 155 Z" fill="url(#glass)" stroke="#8B5CF6" stroke-width="1.5" stroke-opacity="0.6"/>
+              <!-- Блик -->
+              <ellipse cx="80" cy="185" rx="6" ry="20" fill="#F5F5F7" opacity="0.3"/>
+              <!-- Шланг -->
+              <path d="M 130 170 Q 160 175 170 195 Q 175 215 160 225" stroke="url(#metal)" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <circle cx="160" cy="225" r="6" fill="url(#metal)"/>
+            </svg>
+          </div>
+          <div class="hero-visual-badge">
+            <span>Live session</span>
+            <span class="status">online</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Hookah <span class="sep">◆</span> Vibe <span class="sep">◆</span> Chill <span class="sep">◆</span> Lounge <span class="sep">◆</span> W Hookah Zavozik <span class="sep">◆</span> Your Mode <span class="sep">◆</span></span>
+        <span>Hookah <span class="sep">◆</span> Vibe <span class="sep">◆</span> Chill <span class="sep">◆</span> Lounge <span class="sep">◆</span> W Hookah Zavozik <span class="sep">◆</span> Your Mode <span class="sep">◆</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       ATMOSPHERE
+       ============================================ -->
+  <section class="atmosphere" id="atmosphere" aria-labelledby="atm-title">
+    <div class="container">
+      <div class="atm-intro">
+        <div>
+          <div class="section-label reveal">Атмосфера</div>
+          <h2 class="section-title reveal" id="atm-title">
+            Не просто место.<br>
+            <span class="accent">Свой вайб.</span>
+          </h2>
+        </div>
+        <p class="reveal">
+          W Hookah Zavozik — это пространство, где можно замедлиться после длинного дня, встретиться с друзьями или просто побыть наедине с собой. Приглушённый свет, удобные зоны и атмосфера, в которой каждый чувствует себя своим.
+        </p>
+      </div>
+
+      <div class="atm-grid reveal-stagger">
+        <article class="atm-card">
+          <div class="atm-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+              <circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="atm-card-num">01 / COMFORT</div>
+            <h3>Комфортная атмосфера</h3>
+            <p>Мягкий свет, продуманная музыка и интерьер, в котором хочется задержаться. Всё, чтобы ты чувствовал себя расслабленно с первой минуты.</p>
+          </div>
+        </article>
+
+        <article class="atm-card">
+          <div class="atm-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div>
+            <div class="atm-card-num">02 / PEOPLE</div>
+            <h3>Пространство для общения</h3>
+            <p>Уютные зоны для компании любого размера — от тихого вечера вдвоём до встречи с большой компанией друзей. Здесь удобно разговаривать и быть на связи.</p>
+          </div>
+        </article>
+
+        <article class="atm-card">
+          <div class="atm-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="atm-card-num">03 / AESTHETICS</div>
+            <h3>Современная эстетика</h3>
+            <p>Тёмные тона, неоновые акценты и визуальный язык, близкий цифровой культуре. Место, которое приятно снимать и ещё приятнее проживать.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SERVICES
+       ============================================ -->
+  <section class="services" id="services" aria-labelledby="srv-title">
+    <div class="container">
+      <div class="services-head">
+        <div>
+          <div class="section-label reveal">Услуги</div>
+          <h2 class="section-title reveal" id="srv-title">Что <span class="accent">по вайбу?</span></h2>
+        </div>
+        <p class="reveal">
+          Три направления, вокруг которых строится всё остальное. Без лишнего — только то, что действительно делает вечер правильным.
+        </p>
+      </div>
+
+      <div class="srv-grid reveal-stagger">
+        <article class="srv-card">
+          <div class="srv-card-top">
+            <span class="srv-card-num">01</span>
+            <div class="srv-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 2v4M15 2v4"/>
+                <path d="M8 6h8l-1 4H9z"/>
+                <path d="M10 10v4a2 2 0 0 0 4 0v-4"/>
+                <path d="M7 18c0 2 2 3 5 3s5-1 5-3"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Кальян</h3>
+            <p>Подберём формат и вкусы под твой запрос — от классических миксов до более нестандартных сочетаний. Поможем сориентироваться, если ещё не определился.</p>
+          </div>
+          <div class="srv-card-tags">
+            <span>Миксы</span>
+            <span>Классика</span>
+            <span>Подбор</span>
+          </div>
+        </article>
+
+        <article class="srv-card">
+          <div class="srv-card-top">
+            <span class="srv-card-num">02</span>
+            <div class="srv-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 2h8l-1 7H9z"/>
+                <path d="M12 9v4"/>
+                <path d="M7 13h10l-1 8H8z"/>
+                <path d="M5 21h14"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Напитки</h3>
+            <p>Безалкогольные напитки и другие позиции, которые есть в меню заведения. Актуальный ассортимент уточняйте на месте.</p>
+          </div>
+          <div class="srv-card-tags">
+            <span>Безалкогольное</span>
+            <span>Меню</span>
+          </div>
+        </article>
+
+        <article class="srv-card">
+          <div class="srv-card-top">
+            <span class="srv-card-num">03</span>
+            <div class="srv-card-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Пространство</h3>
+            <p>Уютные зоны для отдыха с друзьями. Приходи провести вечер, отметить встречу или просто переключиться после рабочего дня.</p>
+          </div>
+          <div class="srv-card-tags">
+            <span>Лаунж</span>
+            <span>Компании</span>
+            <span>Вечер</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       VIBE BLOCK
+       ============================================ -->
+  <section class="vibe" aria-labelledby="vibe-title">
+    <div class="vibe-bg" aria-hidden="true"></div>
+    <div class="container vibe-inner">
+      <h2 class="vibe-title reveal" id="vibe-title">
+        Залетай<br>за <span class="italic">атмосферой.</span>
+      </h2>
+      <p class="vibe-sub reveal">
+        Один вечер в W Hookah Zavozik — это другой ритм. Приглушённый свет, правильный вайб и пространство, где можно просто быть.
+      </p>
+      <a href="#contacts" class="vibe-cta reveal">
+        Построить маршрут
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CONTACTS
+       ============================================ -->
+  <section class="contacts" id="contacts" aria-labelledby="cnt-title">
+    <div class="container">
+      <div class="section-label reveal">Контакты</div>
+      <h2 class="section-title reveal" id="cnt-title">Где <span class="purple">встречаемся?</span></h2>
+
+      <div class="contacts-grid">
+        <div class="contacts-info reveal-stagger">
+          <!-- ЗАМЕНИТЬ: реальный адрес заведения -->
+          <div class="contact-item">
+            <div class="contact-item-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Адрес
+            </div>
+            <div class="contact-item-value placeholder" data-contact="address">УКАЖИТЕ АДРЕС</div>
+          </div>
+
+          <!-- ЗАМЕНИТЬ: реальный график работы -->
+          <div class="contact-item">
+            <div class="contact-item-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              График работы
+            </div>
+            <div class="contact-item-value placeholder" data-contact="hours">УКАЖИТЕ ГРАФИК РАБОТЫ</div>
+          </div>
+
+          <!-- ЗАМЕНИТЬ: реальный телефон или способ связи -->
+          <div class="contact-item">
+            <div class="contact-item-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Связь
+            </div>
+            <div class="contact-item-value placeholder" data-contact="phone">УКАЖИТЕ КОНТАКТ</div>
+          </div>
+
+          <div class="contacts-cta">
+            <!-- ЗАМЕНИТЬ: реальная ссылка на построение маршрута (например, Яндекс.Карты или 2ГИС) -->
+            <a href="#" class="btn btn-primary" data-route-link aria-label="Построить маршрут до заведения">
+              Построить маршрут
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Карта-заглушка. ЗАМЕНИТЬ на реальную карту или ссылку на картографический сервис -->
+        <div class="map-placeholder reveal" data-map-placeholder>
+          <div class="map-placeholder-inner">
+            <div class="map-pin" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="map-placeholder-text">W Hookah Zavozik</div>
+            <div class="map-placeholder-title">Адрес будет добавлен</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo" aria-label="W Hookah Zavozik — на главную">
+          <span class="logo-mark" aria-hidden="true">W</span>
+          <span>W Hookah Zavozik</span>
+        </a>
+        <p>Пространство для отдыха, общения и правильной атмосферы. Твой режим — твои правила.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="#atmosphere">Атмосфера</a></li>
+          <li><a href="#services">Услуги</a></li>
+          <li><a href="#contacts">Контакты</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Соцсети</h4>
+        <!-- ЗАМЕНИТЬ: реальные ссылки на социальные сети заведения -->
+        <div class="footer-social">
+          <a href="#" aria-label="Соцсеть (ссылка будет добавлена)" data-social="placeholder-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="Соцсеть (ссылка будет добавлена)" data-social="placeholder-2">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 5.8c-.7.3-1.5.6-2.4.7.9-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.7 1a4.2 4.2 0 0 0-7.2 3.8A12 12 0 0 1 3 4.7a4.2 4.2 0 0 0 1.3 5.6c-.7 0-1.3-.2-1.9-.5v.1c0 2 1.4 3.7 3.3 4.1-.6.2-1.3.2-2 .1.5 1.7 2.1 2.9 4 3a8.5 8.5 0 0 1-6.2 1.7A12 12 0 0 0 8 20c7.5 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2z"/></svg>
+          </a>
+          <a href="#" aria-label="Соцсеть (ссылка будет добавлена)" data-social="placeholder-3">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© <span id="year"></span> W Hookah Zavozik. Все права защищены.</div>
+      <div class="footer-age" aria-label="Только для лиц старше 18 лет">
+        <span>18+</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ============================================
+  // YEAR
+  // ============================================
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // ============================================
+  // HEADER SCROLL STATE
+  // ============================================
+  var header = document.getElementById('site-header');
+  var onScroll = function () {
+    if (window.scrollY > 20) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ============================================
+  // MOBILE MENU
+  // ============================================
+  var burger = document.getElementById('burger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var mobileLinks = mobileMenu ? mobileMenu.querySelectorAll('a') : [];
+  var focusableInMenu = [];
+
+  function openMenu() {
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Закрыть меню');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (mobileLinks.length) {
+      setTimeout(function () { mobileLinks[0].focus(); }, 50);
+    }
+  }
+  function closeMenu() {
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Открыть меню');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+    burger.focus();
+  }
+  function toggleMenu() {
+    var expanded = burger.getAttribute('aria-expanded') === 'true';
+    if (expanded) closeMenu(); else openMenu();
+  }
+
+  if (burger) {
+    burger.addEventListener('click', toggleMenu);
+    mobileLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        if (mobileMenu.classList.contains('open')) closeMenu();
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        closeMenu();
+      }
+      if (mobileMenu.classList.contains('open') && e.key === 'Tab') {
+        var focusable = [burger].concat(Array.prototype.slice.call(mobileLinks));
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  }
+
+  // ============================================
+  // SMOOTH SCROLL WITH HEADER OFFSET
+  // ============================================
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (!href || href === '#' || href.length < 2) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      var headerHeight = header ? header.offsetHeight : 0;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    });
+  });
+
+  // ============================================
+  // REVEAL ON SCROLL (IntersectionObserver)
+  // ============================================
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+
+  if ('IntersectionObserver' in window && !prefersReduced) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // ============================================
+  // CARD MOUSE GLOW EFFECT (desktop only)
+  // ============================================
+  if (!prefersReduced && window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.atm-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width) * 100;
+        var y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      });
+    });
+  }
+
+  // ============================================
+  // CONTACT PLACEHOLDERS — disable empty links
+  // ============================================
+  document.querySelectorAll('[data-contact]').forEach(function (el) {
+    var text = (el.textContent || '').trim();
+    if (!text || /^УКАЖИТЕ/i.test(text)) {
+      el.setAttribute('aria-busy', 'true');
+    }
+  });
+  var routeLink = document.querySelector('[data-route-link]');
+  if (routeLink && routeLink.getAttribute('href') === '#') {
+    routeLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      var addressEl = document.querySelector('[data-contact="address"]');
+      if (addressEl && /^УКАЖИТЕ/i.test((addressEl.textContent || '').trim())) {
+        addressEl.style.color = 'var(--accent-lime)';
+        addressEl.style.fontStyle = 'normal';
+        addressEl.textContent = 'Добавьте адрес, чтобы маршрут работал';
+        setTimeout(function () {
+          addressEl.style.color = '';
+          addressEl.style.fontStyle = '';
+          addressEl.textContent = 'УКАЖИТЕ АДРЕС';
+        }, 2200);
+      }
+    });
+  }
+  document.querySelectorAll('[data-social]').forEach(function (a) {
+    if (a.getAttribute('href') === '#') {
+      a.addEventListener('click', function (e) { e.preventDefault(); });
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
+```
