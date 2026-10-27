@@ -397,7 +397,7 @@
   }
   @media (min-width: 1024px) {
     .hero-inner {
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1.5fr 1fr;
       align-items: center;
       gap: 60px;
     }
@@ -431,7 +431,7 @@
     50% { opacity: 0.6; transform: scale(0.85); }
   }
   .hero h1 {
-    font-size: clamp(44px, 8.5vw, 104px);
+    font-size: clamp(44px, 5.5vw, 72px);
     font-weight: 600;
     letter-spacing: -0.04em;
     line-height: 0.95;
@@ -546,10 +546,10 @@
     display: grid;
     place-items: center;
   }
-  .hero-visual-hookah svg {
-    width: 60%;
-    height: 60%;
-    filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6));
+  .hero-visual-hookah img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .hero-visual-badge {
     position: absolute;
@@ -753,6 +753,21 @@
     justify-content: space-between;
     overflow: hidden;
     transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .srv-card:nth-child(1) {
+    background:
+      linear-gradient(rgba(11, 11, 15, 0.52), rgba(11, 11, 15, 0.82)),
+      url("Neon-lit Purple Hookah in Smoky Darkness-1.png") center / cover;
+  }
+  .srv-card:nth-child(2) {
+    background:
+      linear-gradient(rgba(11, 11, 15, 0.52), rgba(11, 11, 15, 0.82)),
+      url("Neon Nightclub Cocktails on Marble-2.png") center / cover;
+  }
+  .srv-card:nth-child(3) {
+    background:
+      linear-gradient(rgba(11, 11, 15, 0.52), rgba(11, 11, 15, 0.82)),
+      url("Gemini_Generated_Image_373fzw373fzw373f.jpg") center / cover;
   }
   .srv-card::after {
     content: "";
@@ -1246,39 +1261,7 @@
         <div class="hero-visual-card">
           <div class="hero-visual-glow"></div>
           <div class="hero-visual-hookah">
-            <!-- Декоративная SVG-иллюстрация кальяна -->
-            <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8"/>
-                  <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.1"/>
-                </linearGradient>
-                <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#F5F5F7" stop-opacity="0.9"/>
-                  <stop offset="100%" stop-color="#A6A6B3" stop-opacity="0.6"/>
-                </linearGradient>
-                <radialGradient id="smoke" cx="0.5" cy="0.5" r="0.5">
-                  <stop offset="0%" stop-color="#C7FF4F" stop-opacity="0.5"/>
-                  <stop offset="100%" stop-color="#C7FF4F" stop-opacity="0"/>
-                </radialGradient>
-              </defs>
-              <!-- Дым -->
-              <circle cx="100" cy="40" r="40" fill="url(#smoke)"/>
-              <circle cx="80" cy="30" r="25" fill="url(#smoke)" opacity="0.6"/>
-              <circle cx="125" cy="35" r="20" fill="url(#smoke)" opacity="0.5"/>
-              <!-- Чаша -->
-              <path d="M 80 60 L 120 60 L 115 80 L 85 80 Z" fill="url(#metal)"/>
-              <!-- Шахта -->
-              <rect x="95" y="80" width="10" height="70" fill="url(#metal)"/>
-              <rect x="92" y="145" width="16" height="6" fill="url(#metal)"/>
-              <!-- Колба -->
-              <path d="M 70 155 Q 60 180 65 210 Q 70 240 100 240 Q 130 240 135 210 Q 140 180 130 155 Z" fill="url(#glass)" stroke="#8B5CF6" stroke-width="1.5" stroke-opacity="0.6"/>
-              <!-- Блик -->
-              <ellipse cx="80" cy="185" rx="6" ry="20" fill="#F5F5F7" opacity="0.3"/>
-              <!-- Шланг -->
-              <path d="M 130 170 Q 160 175 170 195 Q 175 215 160 225" stroke="url(#metal)" stroke-width="4" fill="none" stroke-linecap="round"/>
-              <circle cx="160" cy="225" r="6" fill="url(#metal)"/>
-            </svg>
+            <img src="Neon-Lit Futuristic Hookah.png" alt="">
           </div>
           <div class="hero-visual-badge">
             <span>Live session</span>
@@ -1535,7 +1518,7 @@
       <div class="footer-brand">
         <a href="#top" class="logo" aria-label="W Hookah Zavozik — на главную">
           <span class="logo-mark" aria-hidden="true">W</span>
-          <span>W Hookah Zavozik</span>
+          <span>Hookah Zavozik</span>
         </a>
         <p>Пространство для отдыха, общения и правильной атмосферы. Твой режим — твои правила.</p>
       </div>
